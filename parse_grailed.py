@@ -20,7 +20,7 @@ def soup_parse(db, grailedSoup):
     #TODO sizing guide for subscribers?
 
     for tag in grailedSoup:
-        print('==========')
+ 
         title = tag.find('p', {"class": "truncate listing-title"})
         designer = tag.find('p', {'class': 'listing-designer truncate'})
         size = tag.find('p', {'class': 'listing-size sub-title'})
@@ -29,14 +29,12 @@ def soup_parse(db, grailedSoup):
         newPrice = tag.find('p', {'class': 'sub-title new-price'})
         bump = tag.find('span', {'class': 'date-ago'})
         origin = tag.find('span', {'class': 'bumped date-ago'})
-        
-        print(title.string)
-        print(designer.string)
-        print(size.string)
+        grailed_ID = tag.find('button', {'class': "heart-follow"})['id']
 
         listing = { "name": title.string,
                     "designer": designer.string,
-                    "size": size.string}
+                    "size": size.string,
+                    "grailed_ID": grailed_ID.replace('fr','')}
         
         if ogPrice == None:
             listing["original price"] = oldPrice.string

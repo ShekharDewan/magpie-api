@@ -27,3 +27,7 @@ db = client.item_database
 #automation & parsing stuff (selenium && beautifulsoup) go in here
 #subroutines for updating the database
 
+# list for backend
+# TODO impl. database update routine
+# TODO impl. re-use for chew_grailed routine to get newly uploaded items & disregard duplicates
+# TODO impl. ACCESSOR commands
