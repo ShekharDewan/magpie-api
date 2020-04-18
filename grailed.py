@@ -10,6 +10,7 @@ from pymongo import MongoClient
 
 client = MongoClient('localhost', 27017)
 db = client.item_database
+listings = db.listings
 
 parser = argparse.ArgumentParser("Process list")
 parser.add_argument('-l', '--list', nargs='+', type=str, help='<Required> set flag', required=True)

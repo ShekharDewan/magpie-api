@@ -21,23 +21,24 @@ def soup_parse(db, grailedSoup):
 
     for tag in grailedSoup:
  
-        title = tag.find('p', {"class": "truncate listing-title"})
-        designer = tag.find('p', {'class': 'listing-designer truncate'})
-        size = tag.find('p', {'class': 'listing-size sub-title'})
-        ogPrice = tag.find('p', {'class': 'sub-title original-price'})
-        oldPrice = tag.find('p', {'class': 'sub-title original-price strike-through'})
+        # title = tag.find('p', {"class": "truncate listing-title"})
+        # designer = tag.find('p', {'class': 'listing-designer truncate'})
+        # size = tag.find('p', {'class': 'listing-size sub-title'})
+        # oldPrice = tag.find('p', {'class': 'sub-title original-price strike-through'})
+        # grailed_ID = tag.find('button', {'class': "heart-follow"})['id']
+        
         newPrice = tag.find('p', {'class': 'sub-title new-price'})
+        ogPrice = tag.find('p', {'class': 'sub-title original-price'})
         bump = tag.find('span', {'class': 'date-ago'})
         origin = tag.find('span', {'class': 'bumped date-ago'})
-        grailed_ID = tag.find('button', {'class': "heart-follow"})['id']
 
-        listing = { "name": title.string,
-                    "designer": designer.string,
-                    "size": size.string,
-                    "grailed_ID": grailed_ID.replace('fr','')}
+        listing = { "name": tag.find('p', {"class": "truncate listing-title"}).string,
+                    "designer": tag.find('p', {'class': 'listing-designer truncate'}).string,
+                    "size": tag.find('p', {'class': 'listing-size sub-title'}).string,
+                    "grailed_ID": tag.find('button', {'class': "heart-follow"})['id'].replace('fr','')}
         
         if ogPrice == None:
-            listing["original price"] = oldPrice.string
+            listing["original price"] = tag.find('p', {'class': 'sub-title original-price strike-through'}).string
             listing["current price"] = newPrice.string
         else:
             listing["price"] = ogPrice.string
