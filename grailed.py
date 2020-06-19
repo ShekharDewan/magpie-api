@@ -13,14 +13,17 @@ db = client.item_database
 listings = db.listings
 
 parser = argparse.ArgumentParser("Process list")
-parser.add_argument('-l', '--list', nargs='+', type=str, help='<Required> set flag', required=True)
+parser.add_argument('-l', '--list', nargs='+', type=str, help='<Required> set flag', required=False)
+parser.add_argument('-i', '--id', nargs='+', type=str, help='individual listing', required=False)
 args = parser.parse_args()
 
-designerLst = args.list
-designerLst = [name.replace(" ", "-").lower().split(",") for name in designerLst]
-designerLst = designerLst[0] #list is within a list, so have to extract it like this
-print(designerLst)
+if args.list is not None:
 
-for designer in designerLst:
-    output = chewFeed(designer)
-    soup_parse(db, output)
+    designerLst = args.list
+    designerLst = [name.replace(" ", "-").lower().split(",") for name in designerLst]
+    designerLst = designerLst[0] #list is within a list, so have to extract it like this
+    print(designerLst)
+
+    for designer in designerLst:
+        output = chewFeed(designer)
+        soup_parse(db, output)

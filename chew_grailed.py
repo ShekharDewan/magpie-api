@@ -11,8 +11,7 @@ def chewFeed(name):
     options = Options()
     options.headless = True
     driver = webdriver.Firefox(options=options)
-    #driver = webdriver.Firefox(executable_path=r'C:\Utility\BrowserDrivers\geckodriver.exe')
-    # ^^ important for later use of geckodriver
+
     url = "https://www.grailed.com/designers/"+name
     driver.get(url)
 
@@ -24,19 +23,19 @@ def chewFeed(name):
     prevCount = 0
 
     print("parsing "+ name + " feed items...")
-    while feedCount != count_int:
+    while feedCount < count_int:
             
-        feed = driver.find_element_by_xpath(".//*[@class='feed']")
         feedCount = len(driver.find_elements_by_xpath(".//*[@class='feed']/div"))
         
         driver.execute_script("window.scrollTo(0, 0);")
         driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+        
         if feedCount > prevCount:
             print(percentage(feedCount,count_int))
         prevCount = feedCount
 
+    print("done!")
     source = driver.page_source
     soup = BeautifulSoup(source, 'lxml')
     driver.quit()
-
     return soup.find_all("div", {"class": "feed-item"})
